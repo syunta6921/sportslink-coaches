@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>コーチを探す｜SPORTS LINK</title>
+<meta name="description" content="地域のスポーツコーチを探せるSPORTS LINKのコーチ一覧。登録・掲載は無料。サッカー、バレーボールなど全スポーツ対応。">
+<style>
+  :root{
+    --bg:#0c0c0c; --card:#171717; --line:#2a2a2a;
+    --lime:#c8f31d; --text:#f5f5f5; --muted:#a8a8a8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.6}
+  .wrap{max-width:680px;margin:0 auto;padding:20px 16px 48px}
+  header{padding:28px 0 8px}
+  .brand{color:var(--lime);font-weight:800;letter-spacing:.14em;font-size:13px}
+  h1{font-size:30px;font-weight:900;line-height:1.3;margin-top:6px}
+  .lead{color:var(--muted);font-size:14px;margin-top:10px}
+  .adslot{margin:22px 0;border:1px dashed #3d3d3d;border-radius:12px;color:#6f6f6f;
+    display:flex;align-items:center;justify-content:center;min-height:84px;font-size:12px;letter-spacing:.2em}
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 16px}
+  .filters button{background:var(--card);color:var(--text);border:1px solid var(--line);
+    border-radius:999px;padding:7px 14px;font-size:13px;cursor:pointer}
+  .filters button.on{background:var(--lime);color:#111;border-color:var(--lime);font-weight:700}
+  .coach{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:14px}
+  .coach .sport{color:var(--lime);font-size:12px;font-weight:800;letter-spacing:.12em}
+  .coach h2{font-size:20px;font-weight:800;margin-top:2px}
+  .meta{color:var(--muted);font-size:13px;margin-top:4px}
+  .pr{font-size:14px;margin-top:10px}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+  .tags span{border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:12px;color:var(--muted)}
+  .price{margin-top:10px;font-size:14px}
+  .price b{color:var(--lime)}
+  .cta{display:inline-block;margin-top:12px;background:var(--lime);color:#111;font-weight:800;
+    text-decoration:none;border-radius:10px;padding:10px 18px;font-size:14px}
+  .join{border:1px solid var(--lime);border-radius:16px;padding:18px;margin-top:22px}
+  .join h2{font-size:18px;font-weight:800}
+  .join p{color:var(--muted);font-size:13px;margin-top:6px}
+  .join .cta{background:transparent;color:var(--lime);border:1px solid var(--lime)}
+  footer{color:#6f6f6f;font-size:12px;margin-top:34px;text-align:center}
+  .empty{color:var(--muted);font-size:14px;padding:18px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">SPORTS LINK</div>
+    <h1>コーチを探す</h1>
+    <p class="lead">地域のスポーツコーチと、教わりたい人をつなぐ場所です。競技・エリアから探して、気になるコーチにそのまま問い合わせできます。</p>
+  </header>
+
+  <!-- 広告枠（上部）：スポンサー広告・AdSenseのコードはここに入れる -->
+  <div class="adslot" data-adslot="top">広告枠</div>
+
+  <div class="filters" id="filters"></div>
+  <main id="list"></main>
+
+  <section class="join">
+    <h2>コーチとして登録しませんか</h2>
+    <p>登録・掲載は無料です。手数料もかかりません。プロフィールページの作成はこちらで行います。フォーム入力だけで登録できます。</p>
+    <a class="cta" href="https://docs.google.com/forms/d/e/1FAIpQLSfGbnE_PBPgVrAOTkLz4H9Mn1nqjVrhx0cNtpi7nrt-NWzapw/viewform" target="_blank" rel="noopener">コーチ登録フォーム</a>
+  </section>
+
+  <!-- 広告枠（下部）：スポンサー広告・AdSenseのコードはここに入れる -->
+  <div class="adslot" data-adslot="bottom">広告枠</div>
+
+  <footer>SPORTS LINK代表 安倍隼汰</footer>
+</div>
+
+<script>
+// コーチデータ：登録フォームの内容を確認したら、ここに1件ずつ追加する
+const COACHES = [
+  {
+    name: "安倍 隼汰",
+    sport: "サッカー",
+    area: "埼玉県戸田市・川口市・蕨市・さいたま市南区",
+    targets: ["小学生", "中学生"],
+    formats: ["個人", "グループ"],
+    price: "応相談",
+    career: "中学時代はGRANDE FC所属、鳥取県の米子北高校へ進学。クーバー・コーチングで幼稚園〜小学6年生の指導経験あり。SPORTS LINK代表として戸田市で小・中学生向けアジリティスクールを運営。",
+    pr: "反応と判断の速さ、ボールを受ける前の準備を大事にしています。セレクション対策の相談もどうぞ。",
+    contact: "https://www.instagram.com/sports_link0921"
+  }
+];
+
+const sports = ["すべて", ...new Set(COACHES.map(c => c.sport))];
+const filtersEl = document.getElementById("filters");
+const listEl = document.getElementById("list");
+let current = "すべて";
+
+sports.forEach(s => {
+  const b = document.createElement("button");
+  b.textContent = s;
+  if (s === "すべて") b.classList.add("on");
+  b.onclick = () => {
+    current = s;
+    filtersEl.querySelectorAll("button").forEach(x => x.classList.toggle("on", x.textContent === s));
+    render();
+  };
+  filtersEl.appendChild(b);
+});
+
+function render() {
+  const rows = COACHES.filter(c => current === "すべて" || c.sport === current);
+  if (!rows.length) { listEl.innerHTML = '<p class="empty">この競技のコーチは現在募集中です。</p>'; return; }
+  listEl.innerHTML = rows.map(c => `
+    <article class="coach">
+      <div class="sport">${c.sport}</div>
+      <h2>${c.name}</h2>
+      <div class="meta">${c.area}</div>
+      <p class="pr">${c.pr}</p>
+      <div class="tags">${c.targets.map(t => `<span>対象：${t}</span>`).join("")}${c.formats.map(f => `<span>${f}</span>`).join("")}</div>
+      <div class="price">料金：<b>${c.price}</b></div>
+      <p class="pr" style="color:var(--muted);font-size:13px">${c.career}</p>
+      <a class="cta" href="${c.contact}" target="_blank" rel="noopener">このコーチに問い合わせる</a>
+    </article>`).join("");
+}
+render();
+</script>
+</body>
+</html>
